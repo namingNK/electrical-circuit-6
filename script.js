@@ -616,4 +616,49 @@ function dfsTracker(current, target, adj, visited, checkBlockCondition) {
         }
     }
     return false;
+
 }
+// ==========================================================================
+// 📱 ระบบแปลง Touch Event บนมือถือ ให้ลากสายไฟได้เหมือนคอมพิวเตอร์
+// ==========================================================================
+document.getElementById('sandbox').addEventListener('touchstart', function(e) {
+    // เช็กว่าเด็ก ๆ ใช้นิ้วจิ้มโดนตุ่มแดง (terminal) ไหม
+    if (e.target.classList.contains('terminal')) {
+        e.preventDefault(); // กันหน้าจอมือถือขยับเลื่อนไปมาตอนลากสายไฟ
+        
+        // จำลองการทำ mousedown เพื่อส่งสัญญาณไปหาฟังก์ชันลากสายไฟหลัก
+        const touch = e.touches[0];
+        const mouseEvent = new MouseEvent('mousedown', {
+            clientX: touch.clientX,
+            clientY: touch.clientY
+        });
+        e.target.dispatchEvent(mouseEvent);
+
+        // สร้างฟังก์ชันดักจับตอนเด็ก ๆ ถูนิ้วและยกนิ้วขึ้นบนมือถือ
+        function touchMoveHandler(ev) {
+            const t = ev.touches[0];
+            const moveEvent = new MouseEvent('mousemove', {
+                clientX: t.clientX,
+                clientY: t.clientY
+            });
+            document.dispatchEvent(moveEvent);
+        }
+
+        function touchEndHandler(ev) {
+            // ดึงพิกัดสุดท้ายก่อนยกนิ้วขึ้น เพื่อหาว่าปล่อยนิ้วโดนตุ่มแดงปลายทางไหม
+            const t = ev.changedTouches[0];
+            const endEvent = new MouseEvent('mouseup', {
+                clientX: t.clientX,
+                clientY: t.clientY
+            });
+            document.dispatchEvent(endEvent);
+            
+            // ลบตัวดักจับออกเมื่อยกนิ้วเสร็จสิ้น
+            document.removeEventListener('touchmove', touchMoveHandler);
+            document.removeEventListener('touchend', touchEndHandler);
+        }
+
+        document.addEventListener('touchmove', touchMoveHandler, { passive: false });
+        document.addEventListener('touchend', touchEndHandler);
+    }
+}, { passive: false });
