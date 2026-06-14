@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ เกมสายลับนักต่อวงจรไฟฟ้า ป.6 (PhET Style) 💡</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="home-screen" class="screen active">
+        <div class="home-card">
+            <span style="font-size: 5rem;">⚡</span>
+            <h1>วิศวกรตัวน้อย กับสายไฟที่พันกัน</h1>
+            <p>ห้องแล็บจำลองวงจรไฟฟ้าเสมือนจริง หยิบสายไฟมาลากเชื่อมต่อด้วยตัวเองเพื่อพิชิตภารกิจวิทยาศาสตร์!</p>
+            <button class="btn-start" onclick="switchScreen('level-screen')">🎮 เริ่มเล่นเกม</button>
+        </div>
+    </div>
+
+    <div id="level-screen" class="screen">
+        <button class="btn-back" onclick="switchScreen('home-screen')">⬅️ กลับหน้าแรก</button>
+        <h1>🎯 เลือกภารกิจ </h1>
+        <p>มีทั้งหมด 5 สถานการณ์ท้าทาย เลือกด่านที่ความท้าทายต่างกันได้เลยครับ!</p>
+        
+        <div class="level-grid">
+            <div class="level-card" onclick="startLevel(1)">
+                <div class="level-num">1</div>
+                <div class="level-title">วงจรปิดพื้นฐาน</div>
+            </div>
+            <div class="level-card" onclick="startLevel(2)">
+                <div class="level-num">2</div>
+                <div class="level-title">ระบบสวิตช์ควบคุมวงจร</div>
+            </div>
+            <div class="level-card" onclick="startLevel(3)">
+                <div class="level-num">3</div>
+                <div class="level-title">วงจรอนุกรม</div>
+            </div>
+            <div class="level-card" onclick="startLevel(4)">
+                <div class="level-num">4</div>
+                <div class="level-title">วงจรขนาน</div>
+            </div>
+            <div class="level-card" onclick="startLevel(5)">
+                <div class="level-num">5</div>
+                <div class="level-title">ตัวนำไฟฟ้า & ฉนวนไฟฟ้า</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-screen" class="screen">
+        <div class="top-bar">
+            <button class="btn-back" onclick="switchScreen('level-screen')">🗺️ แผนที่ด่าน</button>
+            <div class="mission-box" id="mission-text">🎯 ภารกิจ: โหลดโจทย์...</div>
+        </div>
+
+        <div class="lab-container">
+            <div class="sidebar">
+                <div class="sidebar-title">คลังอุปกรณ์ (ลากวาง)</div>
+                <div class="tool-btn" draggable="true" data-type="battery">🔋 แบตเตอรี่</div>
+                <div class="tool-btn" draggable="true" data-type="bulb">💡 หลอดไฟ</div>
+                <div class="tool-btn" draggable="true" data-type="switch">🔌 สวิตช์ไฟ</div>
+                <div class="tool-btn" draggable="true" data-type="coin">🪙 เหรียญบาท</div>
+                <div class="tool-btn" draggable="true" data-type="eraser">🧼 ยางลบ</div>
+            </div>
+
+            <div class="sandbox-area" id="sandbox">
+                <svg class="wire-svg" id="wire-svg"></svg>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <button class="btn-check-ans" onclick="verifyLevelAnswer()">✔️ ตรวจสอบวงจรไฟฟ้า</button>
+            <button class="reset-btn" onclick="resetLab()">🔄 ล้างกระดาน</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    <!-- 🌟 กล่องป้ายเฉลิมฉลองสุดน่ารักเมื่อตอบถูก (วางไว้ล่างสุดก่อน </body>) -->
+    <div id="success-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-emoji">🎉🌟🏆</div>
+            <h2 class="modal-title">สุดยอดไปเลยคนเก่ง!</h2>
+            <p id="modal-message" class="modal-text">ข้อความให้กำลังใจจะเปลี่ยนตามด่านตรงนี้...</p>
+            <button class="btn-modal-close" onclick="closeSuccessModal()">🗺️ ไปลุยด่านต่อไปกันเลย!</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script> <!-- อันนี้ของเดิม -->
+
+</body>
+</html>
